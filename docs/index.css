@@ -1,0 +1,30 @@
+.flex-column, .flex-row {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.flex-center {
+    align-items: center;
+    justify-items: center;
+}
+
+div.strokes {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+div.strokes > div.stroke {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgb(0, 0, 0);
+}

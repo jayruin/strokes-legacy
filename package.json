@@ -1,0 +1,20 @@
+{
+  "name": "strokes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "electron": "electron .",
+    "web": "npx http-server docs -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayruin/strokes.git"
+  },
+  "author": "jayruin",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/jayruin/strokes",
+  "devDependencies": {
+    "electron": "*"
+  }
+}
