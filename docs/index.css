@@ -23,8 +23,8 @@ div.strokes {
     border: 1px solid rgb(0, 0, 0);
 }
 
-div.strokes > div.stroke {
-    width: 100px;
-    height: 100px;
+div.strokes > img.stroke {
+    width: 300px;
+    height: 300px;
     border: 1px solid rgb(0, 0, 0);
 }

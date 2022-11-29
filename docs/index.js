@@ -1,4 +1,4 @@
-import { zhSVG } from "https://cdn.jsdelivr.net/gh/jayruin/animated-svg-strokes/strokes.js";
+import { strokes } from "https://cdn.jsdelivr.net/gh/jayruin/animated-svg-strokes/strokes.js";
 import JPScribe from "./modules/jp-scribe.js";
 
 const jpScribe = new JPScribe(document.getElementById("target-jp"));
@@ -6,6 +6,10 @@ const jpScribe = new JPScribe(document.getElementById("target-jp"));
 const shouldSaveCheckbox = document.getElementById("should-save");
 
 const cnTarget = document.getElementById("target-cn");
+const jpTarget = document.getElementById("target-jp");
+
+const cnGetSVG = strokes("zh", "svg", {totalStrokeDuration: 0.5});
+const jpGetSVG = strokes("ja", "svg", {totalStrokeDuration: 0.5});
 
 function clear(element) {
     while (element.firstChild) {
@@ -14,10 +18,10 @@ function clear(element) {
 }
 
 function render(svg, target) {
-    const div = document.createElement("div");
-    div.classList.add("stroke");
-    div.appendChild(svg);
-    target.appendChild(div);
+    const img = document.createElement("img");
+    img.classList.add("stroke");
+    img.src = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], {type: "image/svg+xml"}));
+    target.appendChild(img);
 }
 
 function save(svg, filename) {
@@ -30,7 +34,7 @@ function save(svg, filename) {
 
 document.getElementById("generate-button-cn").addEventListener("click", async function () {
     const character = document.getElementById("character-input").value;
-    const svg = await zhSVG(character);
+    const svg = await cnGetSVG(character);
     clear(cnTarget);
     render(svg, cnTarget);
     if (shouldSaveCheckbox.checked) {
@@ -38,7 +42,12 @@ document.getElementById("generate-button-cn").addEventListener("click", async fu
     }
 });
 
-document.getElementById("generate-button-jp").addEventListener("click", function () {
+document.getElementById("generate-button-jp").addEventListener("click", async function () {
     const character = document.getElementById("character-input").value;
-    jpScribe.renderFanningStrokes(character, shouldSaveCheckbox.checked);
+    const svg = await jpGetSVG(character);
+    clear(jpTarget);
+    render(svg, jpTarget);
+    if (shouldSaveCheckbox.checked) {
+        save(svg, `${character}-jp.svg`)
+    }
 });
