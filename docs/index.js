@@ -1,7 +1,5 @@
 import { strokes } from "https://cdn.jsdelivr.net/gh/jayruin/animated-svg-strokes/strokes.js";
-import JPScribe from "./modules/jp-scribe.js";
-
-const jpScribe = new JPScribe(document.getElementById("target-jp"));
+import { svgToImg } from "https://cdn.jsdelivr.net/gh/jayruin/animated-svg-strokes/convert.js";
 
 const shouldSaveCheckbox = document.getElementById("should-save");
 
@@ -18,9 +16,8 @@ function clear(element) {
 }
 
 function render(svg, target) {
-    const img = document.createElement("img");
+    const img = svgToImg(svg);
     img.classList.add("stroke");
-    img.src = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(svg)], {type: "image/svg+xml"}));
     target.appendChild(img);
 }
 
