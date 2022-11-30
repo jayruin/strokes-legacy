@@ -1,5 +1,4 @@
-import { strokes } from "https://cdn.jsdelivr.net/gh/jayruin/animated-svg-strokes/strokes.js";
-import { svgToImg } from "https://cdn.jsdelivr.net/gh/jayruin/animated-svg-strokes/convert.js";
+import { strokes, svgToImg, } from "https://github.com/jayruin/animated-strokes/releases/download/latest/index.js";
 
 const shouldSaveCheckbox = document.getElementById("should-save");
 
