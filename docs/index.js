@@ -1,4 +1,4 @@
-import { strokes, svgToImg, } from "https://github.com/jayruin/animated-strokes/releases/download/latest/index.js";
+import { strokes, svgToImg, } from "https://cdn.jsdelivr.net/gh/jayruin/animated-strokes-dist/index.js";
 
 const shouldSaveCheckbox = document.getElementById("should-save");
 
