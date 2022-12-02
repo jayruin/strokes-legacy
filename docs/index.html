@@ -7,24 +7,37 @@
     <script type="module" src="index.js" async defer></script>
 </head>
 <body>
-    <div>
-        <input type="text" id="character-input" minlength="1" maxlength="1" size="1"/>
-        <input type="checkbox" id="should-save"/>
-        <label for="should-save">Should Save</label>
+    <div class="flex-row">
+        <div class="flex-item">
+            <input type="text" id="character-input" minlength="1" maxlength="1"/>
+        </div>
+        <div class="flex-item">
+            <button id="generate-button">Generate</button>
+        </div>
+        <div class="flex-item">
+            <select id="strokes-type">
+                <option value="zh">zh</option>
+                <option value="ja">ja</option>
+            </select>
+        </div>
+        <div class="flex-item">
+            <select id="strokes-output-format">
+                <option value="svg-smil">SVG SMIL</option>
+                <option value="svg-css">SVG CSS</option>
+                <option value="canvas">Canvas</option>
+            </select>
+        </div>
+        <div class="flex-item">
+            <button id="clear-button">Clear</button>
+        </div>
     </div>
     
     <div class="flex-row">
         <div class="flex-item">
-            <div>
-                <button type="button" id="generate-button-cn">Generate CN</button>
-            </div>
-            <div id="target-cn" class="strokes flex-column flex-center"></div>
+            <div id="target-zh" class="strokes flex-column flex-center"></div>
         </div>
         <div class="flex-item">
-            <div>
-                <button type="button" id="generate-button-jp">Generate JP</button>
-            </div>
-            <div id="target-jp" class="strokes flex-column flex-center"></div>
+            <div id="target-ja" class="strokes flex-column flex-center"></div>
         </div>
     </div>
 </body>

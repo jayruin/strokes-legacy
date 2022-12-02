@@ -1,12 +1,14 @@
-import { strokes, svgToImg, } from "https://cdn.jsdelivr.net/gh/jayruin/animated-strokes-dist/index.js";
+import { strokes } from "https://cdn.jsdelivr.net/gh/jayruin/animated-strokes-dist/index.js";
 
-const shouldSaveCheckbox = document.getElementById("should-save");
+const characterInput = document.getElementById("character-input");
+const strokesType = document.getElementById("strokes-type");
+const strokesOutputFormat = document.getElementById("strokes-output-format");
 
-const cnTarget = document.getElementById("target-cn");
-const jpTarget = document.getElementById("target-jp");
+const zhTarget = document.getElementById("target-zh");
+const jaTarget = document.getElementById("target-ja");
 
-const cnGetSVG = strokes("zh", "svg", {totalStrokeDuration: 0.5});
-const jpGetSVG = strokes("ja", "svg", {totalStrokeDuration: 0.5});
+const zhExistingCharacters = new Set();
+const jaExistingCharacters = new Set();
 
 function clear(element) {
     while (element.firstChild) {
@@ -14,36 +16,42 @@ function clear(element) {
     }
 }
 
-function render(svg, target) {
-    const img = svgToImg(svg);
-    img.classList.add("stroke");
-    target.appendChild(img);
-}
-
-function save(svg, filename) {
-    const data = new Blob([new XMLSerializer().serializeToString(svg)]);
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(data);
-    a.download = filename;
-    a.click();
-}
-
-document.getElementById("generate-button-cn").addEventListener("click", async function () {
-    const character = document.getElementById("character-input").value;
-    const svg = await cnGetSVG(character);
-    clear(cnTarget);
-    render(svg, cnTarget);
-    if (shouldSaveCheckbox.checked) {
-        save(svg, `${character}-cn.svg`)
+function getExistingCharacters() {
+    switch (strokesType.value) {
+        case "zh":
+            return zhExistingCharacters;
+        case "ja":
+            return jaExistingCharacters;
     }
+}
+
+function getTarget() {
+    switch (strokesType.value) {
+        case "zh":
+            return zhTarget;
+        case "ja":
+            return jaTarget;
+    }
+}
+
+document.getElementById("generate-button").addEventListener("click", async function () {
+    const character = characterInput.value;
+    const existingCharacters = getExistingCharacters();
+    if (existingCharacters.has(character)){
+        return;
+    } else {
+        existingCharacters.add(character);
+    }
+    const strokesElement = await strokes(strokesType.value, strokesOutputFormat.value, {totalStrokeDuration: 0.5})(character);
+    strokesElement.classList.add("stroke");
+    const target = getTarget();
+    target.appendChild(strokesElement);
 });
 
-document.getElementById("generate-button-jp").addEventListener("click", async function () {
-    const character = document.getElementById("character-input").value;
-    const svg = await jpGetSVG(character);
-    clear(jpTarget);
-    render(svg, jpTarget);
-    if (shouldSaveCheckbox.checked) {
-        save(svg, `${character}-jp.svg`)
-    }
+document.getElementById("clear-button").addEventListener("click", async function () {
+    clear(zhTarget);
+    clear(jaTarget);
+    zhExistingCharacters.clear();
+    jaExistingCharacters.clear();
+    characterInput.value = characterInput.defaultValue;
 });
